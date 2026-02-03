@@ -30,7 +30,7 @@
 }
 
 .summary-header h2 {
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   color: #1e293b;
   font-weight: 700;
   letter-spacing: -0.025em;
@@ -85,7 +85,7 @@
 }
 
 .section-title {
-  font-size: 1.125rem;
+  font-size: 0.9375rem;
   color: #475569;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -96,7 +96,7 @@
 }
 
 .summary-title {
-  font-size: 1.375rem;
+  font-size: 1.0625rem;
   color: #1e293b;
   font-weight: 700;
   line-height: 1.5;
@@ -111,11 +111,11 @@
 }
 
 .insights-list li {
-  padding: 1rem 1.25rem;
+  padding: 0.75rem 1rem;
   background: white;
   border-radius: 10px;
   border-left: 3px solid #64748b;
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
   color: #334155;
   line-height: 1.6;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -136,11 +136,11 @@
 }
 
 .steps-list li {
-  padding: 1rem 1.25rem 1rem 3.5rem;
+  padding: 0.75rem 1rem 0.75rem 3rem;
   background: white;
   border-radius: 10px;
   border-left: 3px solid #64748b;
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
   color: #334155;
   line-height: 1.6;
   position: relative;

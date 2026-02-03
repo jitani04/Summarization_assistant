@@ -1,14 +1,11 @@
 # Content Summarizer App
 
-A modern full-stack application for summarizing articles and text content for specific audiences and purposes. Features include URL extraction, bot gate handling, and browser automation for reliable content extraction.
+A modern React application for summarizing articles and text content for specific audiences and purposes. Uses Google Gemini AI for intelligent content analysis.
 
 ## ✨ Key Features
 
 - **📄 Dual Input Methods**: Accept URLs or paste text directly
-- **🤖 Smart Content Extraction**:
-  - Gemini API with `url_context` tool for direct access
-  - Proxy-based extraction (AllOrigins, Jina AI) as fallback
-  - Browser automation (Playwright) for bot-gated sites
+- **🤖 Smart Content Extraction**: Gemini API with `url_context` tool for direct URL access
 - **🎯 Audience-Specific Summaries**: Tailor for different audiences (executives, technical professionals, students, researchers, etc.)
 - **🔍 Purpose-Driven Content**: Generate based on intent (informative, actionable, learning, quick overview, research)
 - **📋 Structured Output**:
@@ -18,71 +15,45 @@ A modern full-stack application for summarizing articles and text content for sp
 - **🎨 Modern UI**: 
   - Gray color scheme
   - ChatGPT-style input interface
-  - Side-by-side or stacked layout
   - Responsive design
 
 ## 🏗️ Architecture
 
 ```
-Summarization_assistant/
-├── frontend/                   ├── backend/
-│   ├── src/                    │   ├── server.js
-│   ├── public/                 │   └── package.json
-│   └── package.json            └── (Express + Playwright)
-└── (React/Vite)
-
-Frontend (React/Vite)          Backend (Express/Node.js)
-├── InputForm                  ├── Express Server
-├── SummaryDisplay            ├── Playwright/Chromium
-├── LoadingSpinner            └── Content Extraction
-└── Services:                   
-    ├── Gemini API ────────────→ Gemini Service
-    ├── Proxy Extraction
-    └── Browser Service ──────→ Backend API
+┌─────────────────────────────────────────────────────────┐
+│                   User Interface (React)                │
+│   ┌─────────────────────────────────────────────────┐   │
+│   │  InputForm: Content input & options selection   │   │
+│   └─────────────────────────────────────────────────┘   │
+│                          ↓                              │
+│   ┌─────────────────────────────────────────────────┐   │
+│   │  Google Gemini API (summarization service)      │   │
+│   └─────────────────────────────────────────────────┘   │
+│                          ↓                              │
+│   ┌─────────────────────────────────────────────────┐   │
+│   │  SummaryDisplay: Structured summary output      │   │
+│   └─────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
 ```
 
 ## 📦 Tech Stack
 
 - **Frontend**: React 18 + TypeScript + Vite
-- **Backend**: Express.js + Playwright + Chromium
 - **AI**: Google Gemini API
-- **Content Extraction**: Multiple methods (API, proxy, browser automation)
+- **Content Extraction**: Gemini url_context tool
 - **Styling**: Modern CSS with responsive design
 
 ## 🚀 Quick Start
 
-### Option 1: Automated Setup (Recommended)
-
 ```bash
-# Run setup script
-./setup.sh
-
-# Add your API key to .env
-# Then run:
-npm run dev:all      # Full stack (frontend + backend)
-# or
-npm run dev          # Frontend only
-```
-
-### Option 2: Manual Setup
-
-```bash
-# Install everything
+# Install dependencies
 npm run setup
 
-# Configure .env
-cp .env.example .env
-# Edit .env and add VITE_GOOGLE_GEMINI_API_KEY
+# Add your API key to frontend/.env
+echo "VITE_GOOGLE_GEMINI_API_KEY=your_api_key_here" > frontend/.env
 
-# Run frontend only
+# Start the app
 npm run dev
-
-# Or run full stack in two terminals:
-# Terminal 1:
-npm run dev
-
-# Terminal 2:
-npm run dev:backend
 ```
 
 ## 📋 Prerequisites
@@ -96,50 +67,26 @@ npm run dev:backend
 Create `frontend/.env` file:
 ```
 VITE_GOOGLE_GEMINI_API_KEY=your_api_key_here
-VITE_BACKEND_URL=http://localhost:3001  # Optional, defaults to 3001
 ```
 
 ## 📚 Available Commands
 
 ```bash
-npm run setup              # One-time setup (installs everything)
-npm run dev                # Frontend only on port 5173
-npm run dev:all            # Full stack (frontend + backend)
-npm run dev:frontend       # Frontend only
-npm run dev:backend        # Backend only on port 3001
-npm run build              # Build frontend for production
+npm run setup              # One-time setup (installs dependencies)
+npm run dev                # Start development server on port 5173
+npm run build              # Build for production
 npm run preview            # Preview production build
 npm run lint               # Run linter
 ```
 
 ## 🤖 How It Works
 
-### Content Extraction Pipeline
-
-1. **Primary**: Gemini API `url_context` tool (fastest, direct access)
-2. **Fallback 1**: Proxy-based extraction (AllOrigins, Jina AI)
-3. **Fallback 2**: Browser automation via Playwright (handles bot gates)
-4. **Bot Gate Detection**: Automatically triggered when needed
-
-### Frontend Workflow
-
 1. User enters URL or pastes text
 2. Selects audience and purpose
 3. Clicks submit
 4. Frontend calls Gemini API with content
-5. Returns structured summary
-6. If Gemini fails due to bot gate, retries with proxy extraction
-7. If proxy fails, calls backend for browser automation
-
-### Backend Workflow (When Running)
-
-1. Receives extraction request from frontend
-2. Launches Chromium in headless mode
-3. Loads page with realistic browser headers
-4. Waits for JavaScript to execute
-5. Extracts article content
-6. Removes ads, navigation, footers
-7. Returns clean text to frontend
+5. For URLs, Gemini uses `url_context` tool to fetch content directly
+6. Returns structured summary with title, key insights, and next steps
 
 ## 🎯 Deployment
 

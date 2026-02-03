@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { extractContentFromUrl } from '../services/urlExtractionService'
 import './InputForm.css'
 
 interface InputFormProps {
@@ -12,7 +11,6 @@ export default function InputForm({ onSummarize, disabled }: InputFormProps) {
   const [inputType, setInputType] = useState<'url' | 'text'>('text')
   const [audience, setAudience] = useState('general')
   const [purpose, setPurpose] = useState('informative')
-  const [extracting, setExtracting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -22,26 +20,7 @@ export default function InputForm({ onSummarize, disabled }: InputFormProps) {
       return
     }
 
-    let contentToSummarize = inputValue
-
-    if (inputType === 'url') {
-      setExtracting(true)
-      try {
-        contentToSummarize = await extractContentFromUrl(inputValue)
-      } catch (error) {
-        alert(
-          error instanceof Error
-            ? error.message
-            : 'Failed to extract content from URL'
-        )
-        setExtracting(false)
-        return
-      } finally {
-        setExtracting(false)
-      }
-    }
-
-    onSummarize(contentToSummarize, audience, purpose)
+    onSummarize(inputValue, audience, purpose)
   }
 
   return (
@@ -57,32 +36,28 @@ export default function InputForm({ onSummarize, disabled }: InputFormProps) {
                 : 'Paste your article or text here...'
             }
             className="content-input"
-            disabled={disabled || extracting}
+            disabled={disabled}
             rows={inputType === 'url' ? 2 : 4}
           />
           <button
             type="submit"
             className="submit-button-inline"
-            disabled={disabled || extracting || !inputValue.trim()}
+            disabled={disabled || !inputValue.trim()}
             title="Summarize"
           >
-            {extracting ? (
-              <span className="button-spinner"></span>
-            ) : (
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M22 2L11 13" />
-                <path d="M22 2L15 22L11 13L2 9L22 2Z" />
-              </svg>
-            )}
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M22 2L11 13" />
+              <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+            </svg>
           </button>
         </div>
 
@@ -90,7 +65,7 @@ export default function InputForm({ onSummarize, disabled }: InputFormProps) {
           <select
             value={inputType}
             onChange={(e) => setInputType(e.target.value as 'url' | 'text')}
-            disabled={disabled || extracting}
+            disabled={disabled}
             className="input-type-dropdown"
           >
             <option value="text">Paste Text</option>
@@ -101,7 +76,7 @@ export default function InputForm({ onSummarize, disabled }: InputFormProps) {
             id="audience"
             value={audience}
             onChange={(e) => setAudience(e.target.value)}
-            disabled={disabled || extracting}
+            disabled={disabled}
             className="parameter-select"
           >
             <option value="general">General Public</option>
@@ -115,7 +90,7 @@ export default function InputForm({ onSummarize, disabled }: InputFormProps) {
             id="purpose"
             value={purpose}
             onChange={(e) => setPurpose(e.target.value)}
-            disabled={disabled || extracting}
+            disabled={disabled}
             className="parameter-select"
           >
             <option value="informative">Informative</option>
