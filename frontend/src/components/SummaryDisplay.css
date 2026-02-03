@@ -1,0 +1,232 @@
+.summary-display {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 40px rgba(0, 0, 0, 0.03);
+  animation: slideIn 0.4s ease-out;
+  border: 1px solid #e2e8f0;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #f1f5f9;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.summary-header h2 {
+  font-size: 1.75rem;
+  color: #1e293b;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.summary-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.action-button {
+  padding: 0.625rem 1.25rem;
+  background: linear-gradient(135deg, #475569 0%, #64748b 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.2);
+  letter-spacing: 0.01em;
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.action-button:active {
+  transform: translateY(0);
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.summary-section {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 12px;
+  border-left: 4px solid #475569;
+  transition: all 0.2s ease;
+}
+
+.summary-section:hover {
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+  transform: translateX(2px);
+}
+
+.section-title {
+  font-size: 1.125rem;
+  color: #475569;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  letter-spacing: 0.01em;
+}
+
+.summary-title {
+  font-size: 1.375rem;
+  color: #1e293b;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.025em;
+}
+
+.insights-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.insights-list li {
+  padding: 1rem 1.25rem;
+  background: white;
+  border-radius: 10px;
+  border-left: 3px solid #64748b;
+  font-size: 0.9375rem;
+  color: #334155;
+  line-height: 1.6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.insights-list li:hover {
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.12);
+}
+
+.steps-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  counter-reset: step-counter;
+}
+
+.steps-list li {
+  padding: 1rem 1.25rem 1rem 3.5rem;
+  background: white;
+  border-radius: 10px;
+  border-left: 3px solid #64748b;
+  font-size: 0.9375rem;
+  color: #334155;
+  line-height: 1.6;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.steps-list li:hover {
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.12);
+}
+
+.steps-list li::before {
+  content: counter(step-counter);
+  counter-increment: step-counter;
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #475569 0%, #64748b 100%);
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+}
+
+@media (max-width: 768px) {
+  .summary-display {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .summary-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .summary-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .summary-actions {
+    width: 100%;
+  }
+
+  .action-button {
+    flex: 1;
+    min-width: 100px;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+  }
+
+  .summary-section {
+    padding: 1.25rem;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+
+  .summary-title {
+    font-size: 1.25rem;
+  }
+
+  .insights-list li,
+  .steps-list li {
+    font-size: 0.875rem;
+    padding: 0.875rem 1rem;
+  }
+
+  .steps-list li {
+    padding-left: 3rem;
+  }
+
+  .steps-list li::before {
+    width: 24px;
+    height: 24px;
+    font-size: 0.75rem;
+    left: 0.875rem;
+  }
+}
